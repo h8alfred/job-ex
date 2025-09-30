@@ -1,6 +1,6 @@
 package org.job.sbjobex.controller;
 
-import org.job.sbjobex.dto.JobDTO;
+import org.job.sbjobex.dto.JobNotificationDTO;
 import org.job.sbjobex.model.JobEntity;
 import org.job.sbjobex.service.JobService;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,11 +28,11 @@ class JobControllerTest {
     @Test
     void testIsFirstTimePoster_True() {
         // Arrange
-        JobDTO jobDTO = new JobDTO();
-        jobDTO.setTitle("Sample Job Title");
-        jobDTO.setDescription("Sample Job Description");
-        jobDTO.setEmail("sample@example.com");
-        jobDTO.setId(1L);
+        JobNotificationDTO jobNotificationDTO = new JobNotificationDTO();
+        jobNotificationDTO.setTitle("Sample Job Title");
+        jobNotificationDTO.setDescription("Sample Job Description");
+        jobNotificationDTO.setEmail("sample@example.com");
+        jobNotificationDTO.setId(1L);
 
         JobEntity jobEntity = new JobEntity();
         jobEntity.setTitle("Sample Job Title");
@@ -40,9 +40,9 @@ class JobControllerTest {
         jobEntity.setEmail("sample@example.com");
 
         when(jobService.isFirstTimePoster(anyString())).thenReturn(true);
-        when(jobService.saveJob(jobDTO)).thenReturn(jobEntity);
+        when(jobService.saveJob(jobNotificationDTO)).thenReturn(jobEntity);
         // Act
-        ResponseEntity<String> response = jobController.postJob(jobDTO);
+        ResponseEntity<String> response = jobController.postJob(jobNotificationDTO);
 
         // Assert
         assertTrue(response.getBody().contains("Job posted successfully with ID"));
@@ -52,11 +52,11 @@ class JobControllerTest {
     @Test
     void testSaveJob() {
         // Arrange
-        JobDTO jobDTO = new JobDTO();
-        jobDTO.setTitle("Sample Job Title");
-        jobDTO.setDescription("Sample Job Description");
-        jobDTO.setEmail("sample@example.com");
-        jobDTO.setId(1L);
+        JobNotificationDTO jobNotificationDTO = new JobNotificationDTO();
+        jobNotificationDTO.setTitle("Sample Job Title");
+        jobNotificationDTO.setDescription("Sample Job Description");
+        jobNotificationDTO.setEmail("sample@example.com");
+        jobNotificationDTO.setId(1L);
 
         JobEntity jobEntity = new JobEntity();
         jobEntity.setTitle("Sample Job Title");
@@ -64,14 +64,14 @@ class JobControllerTest {
         jobEntity.setEmail("sample@example.com");
 
         when(jobService.isFirstTimePoster(anyString())).thenReturn(true);
-        when(jobService.saveJob(jobDTO)).thenReturn(jobEntity);
+        when(jobService.saveJob(jobNotificationDTO)).thenReturn(jobEntity);
 
         // Act
-        ResponseEntity<String> response = jobController.postJob(jobDTO);
+        ResponseEntity<String> response = jobController.postJob(jobNotificationDTO);
 
         // Assert
         assertTrue(Objects.requireNonNull(response.getBody()).contains("Job posted successfully with ID"));
-        verify(jobService, times(1)).saveJob(jobDTO);
+        verify(jobService, times(1)).saveJob(jobNotificationDTO);
     }
 
     @Test

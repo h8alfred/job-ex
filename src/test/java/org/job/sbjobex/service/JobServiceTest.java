@@ -1,6 +1,6 @@
 package org.job.sbjobex.service;
 
-import org.job.sbjobex.dto.JobDTO;
+import org.job.sbjobex.dto.JobNotificationDTO;
 import org.job.sbjobex.model.JobEntity;
 import org.job.sbjobex.repository.InMemoryJobRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,15 +56,15 @@ class JobServiceTest {
     @Test
     void testSaveJob() {
         // Arrange
-        JobDTO jobDTO = new JobDTO();
-        jobDTO.setTitle("Test Job");
-        jobDTO.setEmail("test@example.com");
+        JobNotificationDTO jobNotificationDTO = new JobNotificationDTO();
+        jobNotificationDTO.setTitle("Test Job");
+        jobNotificationDTO.setEmail("test@example.com");
         JobEntity jobEntity = new JobEntity();
         jobEntity.setId(1L);
         when(jobRepository.save(any(JobEntity.class))).thenReturn(jobEntity);
 
         // Act
-        JobEntity result = jobService.saveJob(jobDTO);
+        JobEntity result = jobService.saveJob(jobNotificationDTO);
 
         // Assert
         assertNotNull(result);

@@ -1,7 +1,7 @@
 package org.job.sbjobex.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.job.sbjobex.dto.JobDTO;
+import org.job.sbjobex.dto.JobNotificationDTO;
 import org.job.sbjobex.model.JobEntity;
 import org.job.sbjobex.service.JobService;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +23,13 @@ public class JobController {
     }
 
     @PostMapping
-    public ResponseEntity<String> postJob(@RequestBody JobDTO jobDTO) {
+    public ResponseEntity<String> postJob(@RequestBody JobNotificationDTO jobNotificationDTO) {
         try {
             JobEntity savedJob = null;
-            if (jobService.isFirstTimePoster(jobDTO.getEmail())) {
-                savedJob = jobService.saveJob(jobDTO);
-                jobDTO.setId(savedJob.getId());
-                jobService.notifyModerator(jobDTO);
+            if (jobService.isFirstTimePoster(jobNotificationDTO.getEmail())) {
+                savedJob = jobService.saveJob(jobNotificationDTO);
+                jobNotificationDTO.setId(savedJob.getId());
+                jobService.notifyModerator(jobNotificationDTO);
             }
             assert savedJob != null;
             return ResponseEntity.ok("Job posted successfully with ID: " + savedJob.getId());

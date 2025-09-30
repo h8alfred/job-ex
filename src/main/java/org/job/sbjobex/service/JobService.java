@@ -1,7 +1,7 @@
 package org.job.sbjobex.service;
 
 import jakarta.mail.MessagingException;
-import org.job.sbjobex.dto.JobDTO;
+import org.job.sbjobex.dto.JobNotificationDTO;
 import org.job.sbjobex.model.JobEntity;
 import org.job.sbjobex.repository.InMemoryJobRepository;
 import org.springframework.stereotype.Service;
@@ -30,11 +30,11 @@ public class JobService {
         return jobRepository.findByEmail(email).isEmpty();
     }
 
-    public JobEntity saveJob(JobDTO jobDTO) {
+    public JobEntity saveJob(JobNotificationDTO jobNotificationDTO) {
         JobEntity job = new JobEntity();
-        job.setTitle(jobDTO.getTitle());
-        job.setDescription(jobDTO.getDescription());
-        job.setEmail(jobDTO.getEmail());
+        job.setTitle(jobNotificationDTO.getTitle());
+        job.setDescription(jobNotificationDTO.getDescription());
+        job.setEmail(jobNotificationDTO.getEmail());
         job.setApproved(false);
         return jobRepository.save(job);
     }
@@ -56,14 +56,14 @@ public class JobService {
     }
 
 
-    public void notifyModerator(JobDTO jobDTO) throws IOException {
+    public void notifyModerator(JobNotificationDTO jobNotificationDTO) throws IOException {
         String subject = "New Job Submission";
 
         ModelMap model = new ModelMap();
-        model.addAttribute("title", jobDTO.getTitle());
-        model.addAttribute("description", jobDTO.getDescription());
-        model.addAttribute("email", jobDTO.getEmail());
-        model.addAttribute("jobId", Optional.ofNullable(jobDTO.getId()).orElse(-1L));
+        model.addAttribute("title", jobNotificationDTO.getTitle());
+        model.addAttribute("description", jobNotificationDTO.getDescription());
+        model.addAttribute("email", jobNotificationDTO.getEmail());
+        model.addAttribute("jobId", Optional.ofNullable(jobNotificationDTO.getId()).orElse(-1L));
 
         String body;
         try (InputStreamReader reader = new InputStreamReader(
