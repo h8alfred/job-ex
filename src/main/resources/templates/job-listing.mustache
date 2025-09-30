@@ -11,6 +11,11 @@
             <h2>{{name}}</h2>
             <p><strong>Department:</strong> {{department}}</p>
             <p><strong>Office:</strong> {{office}}</p>
+            <p><strong>Descriptions</strong></p>
+            {{#jobDescriptions}}
+                <p><strong>Name:</strong> {{name}}</p>
+                <p><strong>Value:</strong> {{{value}}}</p>
+            {{/jobDescriptions}}
             <a href="/job-listings/{{id}}">View Full Job Posting</a>
         </li>
     {{/positions}}
