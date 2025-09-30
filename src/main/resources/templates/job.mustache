@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+<h1>{{title}}</h1>
+<p><strong>Description:</strong> {{description}}</p>
+<p><strong>Email:</strong> {{email}}</p>
+
+<!-- Links for approving or marking the job as spam. Localhost for now -->
+<p>
+
+<form action="http://localhost:8080/jobs/{{jobId}}/approve" method="post">
+    <button type="submit">Approve Job</button>
+</form>
+
+<form action="http://localhost:8080/jobs/{{jobId}}/spam" method="post">
+    <button type="submit">Mark as Spam</button>
+</form>
+
+</p>
+</body>
+</html>
