@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Board</title>
+</head>
+<body>
+<h1>Job Board</h1>
+<ul>
+    {{#positions}}
+        <li>
+            <h2>{{name}}</h2>
+            <p><strong>Department:</strong> {{department}}</p>
+            <p><strong>Office:</strong> {{office}}</p>
+            <a href="/job-listings/{{id}}">View Full Job Posting</a>
+        </li>
+    {{/positions}}
+</ul>
+</body>
+</html>

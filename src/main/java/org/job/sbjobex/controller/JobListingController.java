@@ -1,32 +1,28 @@
 package org.job.sbjobex.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import org.job.sbjobex.dto.WorkzagJobsDTO;
 import org.job.sbjobex.service.PersonioJobService;
-import org.springframework.http.ResponseEntity;
+import org.job.sbjobex.service.JobListingService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
-@RestController
-@RequestMapping("/job-listings")
+@Controller
 public class JobListingController {
 
     private final PersonioJobService personioJobService;
+    private final JobListingService jobListingService;
 
-    public JobListingController(PersonioJobService personioJobService) {
+    public JobListingController(PersonioJobService personioJobService, JobListingService jobListingService) {
         this.personioJobService = personioJobService;
+        this.jobListingService = jobListingService;
     }
 
-    @GetMapping
-    public ResponseEntity<WorkzagJobsDTO> getJobs() {
-        try {
-            WorkzagJobsDTO jobs = personioJobService.fetchJobs();
-            return ResponseEntity.ok(jobs);
-        } catch (Exception e) {
-            log.error("Error fetching job listings", e);
-            return ResponseEntity.status(500).body(null);
-        }
+    @GetMapping("/job-listings")
+    public String displayJobListings(ModelMap model) {
+        WorkzagJobsDTO workzagJobsDTO = personioJobService.fetchJobs();
+        ModelMap jobModel = jobListingService.getModelMap(workzagJobsDTO);
+        model.addAllAttributes(jobModel);
+        return "job-listing";
     }
 }
